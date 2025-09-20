@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIDCIRCLE - Платформа для детского развития</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #4b47c2;
+            --secondary: #ff6b6b;
+            --accent: #00d1b2;
+            --light: #f7fafc;
+            --dark: #1f2430;
+            --gray: #8a93a6;
+            --light-gray: #e2e8f0;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            color: var(--secondary);
+            font-size: 1.6rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e5e9ff 100%);
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-desc {
+            color: var(--gray);
+        }
+        
+        /* For Parents Section */
+        .for-parents {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e5e9ff 100%);
+        }
+        
+        .parents-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .parents-image {
+            flex: 1;
+        }
+        
+        .parents-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .parents-text {
+            flex: 1;
+        }
+        
+        .parents-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .parents-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .parents-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .parents-list li i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        /* For Organizations Section */
+        .for-organizations {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .orgs-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .orgs-text {
+            flex: 1;
+        }
+        
+        .orgs-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .orgs-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .orgs-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .orgs-list li i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .orgs-image {
+            flex: 1;
+        }
+        
+        .orgs-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e5e9ff 100%);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .testimonial-text:before {
+            content: """;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            font-family: serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .author-role {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-subtitle {
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn-light {
+            background: white;
+            color: var(--primary);
+            border: 2px solid white;
+        }
+        
+        .btn-light:hover {
+            background: transparent;
+            color: white;
+        }
+        
+        .btn-dark {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-dark:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .footer-desc {
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Auth Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+        }
+        
+        .modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .auth-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .user-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .user-type {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .user-type.active {
+            border-color: var(--primary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+        
+        .user-type i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .user-type h4 {
+            margin-bottom: 5px;
+        }
+        
+        .user-type p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-content, .parents-content, .orgs-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-buttons, .parents-buttons {
+                justify-content: center;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-child logo-icon"></i>
+                <span>KIDCIRCLE</span>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-link">Главная</a>
+                <a href="#features" class="nav-link">Возможности</a>
+                <a href="#for-parents" class="nav-link">Родителям</a>
+                <a href="#for-organizations" class="nav-link">Организациям</a>
+                <a href="#testimonials" class="nav-link">Отзывы</a>
+            </nav>
+            
+            <div class="auth-buttons">
+                <button class="btn btn-outline" id="login-btn">Войти</button>
+                <button class="btn btn-primary" id="register-btn">Регистрация</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Найдите идеальные кружки для развития вашего ребенка</h1>
+                <p class="hero-subtitle">KIDCIRCLE соединяет родителей с лучшими детскими кружками и секциями, а организации — с целевой аудиторией</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="hero-register-btn">Начать сейчас</button>
+                    <button class="btn btn-outline">Узнать больше</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://placehold.co/600x400/6c5ce7/white?text=KIDCIRCLE" alt="KIDCIRCLE">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают KIDCIRCLE</h2>
+            <p class="section-subtitle">Мы создали универсальную платформу для поиска и организации детских кружков с заботой о потребностях всех участников</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="feature-title">Умный поиск</h3>
+                    <p class="feature-desc">AI-технологии для подбора кружков по интересам, возрасту и расположению</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">Тест способностей</h3>
+                    <p class="feature-desc">Помогаем определить таланты ребенка и подобрать подходящие занятия</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Онлайн-запись</h3>
+                    <p class="feature-desc">Удобное бронирование и оплата занятий в несколько кликов</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Аналитика</h3>
+                    <p class="feature-desc">Для организаций: отслеживание посещаемости, финансов и эффективности</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Управление клиентами</h3>
+                    <p class="feature-desc">Система учета учеников, напоминаний и коммуникации с родителями</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="feature-title">Репутация</h3>
+                    <p class="feature-desc">Система отзывов и рейтингов для повышения доверия к организациям</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Parents Section -->
+    <section class="for-parents" id="for-parents">
+        <div class="container parents-content">
+            <div class="parents-image">
+                <img src="https://placehold.co/500x400/6c5ce7/white?text=Для+родителей" alt="Для родителей">
+            </div>
+            <div class="parents-text">
+                <h2 class="parents-title">Для родителей</h2>
+                <ul class="parents-list">
+                    <li><i class="fas fa-check"></i> Находите проверенные кружки и секции рядом с домом</li>
+                    <li><i class="fas fa-check"></i> Проходите AI-тест для определения способностей ребенка</li>
+                    <li><i class="fas fa-check"></i> Бронируйте и оплачивайте занятия онлайн</li>
+                    <li><i class="fas fa-check"></i> Получайте напоминания о занятиях и событиях</li>
+                    <li><i class="fas fa-check"></i> Читайте отзывы других родителей и делитесь своим опытом</li>
+                </ul>
+                <div class="parents-buttons">
+                    <button class="btn btn-primary">Найти кружки</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Organizations Section -->
+    <section class="for-organizations" id="for-organizations">
+        <div class="container orgs-content">
+            <div class="orgs-text">
+                <h2 class="orgs-title">Для организаций</h2>
+                <ul class="orgs-list">
+                    <li><i class="fas fa-check"></i> Привлекайте целевую аудиторию — родителей вашего региона</li>
+                    <li><i class="fas fa-check"></i> Управляйте расписанием и записью на занятия</li>
+                    <li><i class="fas fa-check"></i> Автоматизируйте финансовый учет и отчетность</li>
+                    <li><i class="fas fa-check"></i> Собирайте отзывы и улучшайте свой сервис</li>
+                    <li><i class="fas fa-check"></i> Используйте аналитику для повышения эффективности</li>
+                </ul>
+                <div class="orgs-buttons">
+                    <button class="btn btn-primary">Зарегистрировать организацию</button>
+                </div>
+            </div>
+            <div class="orgs-image">
+                <img src="https://placehold.co/500x400/6c5ce7/white?text=Для+организаций" alt="Для организаций">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Что говорят наши пользователи</h2>
+            <p class="section-subtitle">Узнайте от реальных пользователей, как KIDCIRCLE изменил их опыт поиска и организации детских кружков</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        Благодаря KIDCIRCLE я нашла художественную студию для дочки всего в 10 минутах от дома. Тест способностей помог определить, что у нее действительно есть талант к рисованию!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ЕК</div>
+                        <div class="author-info">
+                            <h4>Екатерина К.</h4>
+                            <div class="author-role">Мама 7-летней Софии</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        Наша футбольная школа за 3 месяца работы с KIDCIRCLE увеличила количество учеников на 40%. Отличная платформа для привлечения клиентов и удобного управления записями.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ДМ</div>
+                        <div class="author-info">
+                            <h4>Дмитрий М.</h4>
+                            <div class="author-role">Владелец футбольной академии</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        Как мама двоих детей, я ценю возможность в одном месте найти, сравнить и записать детей на кружки. Больше не нужно обзванивать десятки мест и помнить все расписания.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ОС</div>
+                        <div class="author-info">
+                            <h4>Ольга С.</h4>
+                            <div class="author-role">Мама 6-летнего Максима и 9-летней Алисы</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        Система аналитики KIDCIRCLE помогла нам оптимизировать расписание и загрузку преподавателей. Теперь мы видим четкую картину по посещаемости и финансам.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">АВ</div>
+                        <div class="author-info">
+                            <h4>Анна В.</h4>
+                            <div class="author-role">Директор центра развития</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Присоединяйтесь к KIDCIRCLE</h2>
+            <p class="cta-subtitle">Начните использовать платформу уже сегодня для поиска крутков или развития вашей организации</p>
+            <div class="cta-buttons">
+                <button class="btn btn-light" id="cta-register-btn">Зарегистрироваться</button>
+                <button class="btn btn-dark">Узнать больше</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-child logo-icon"></i>
+                        <span>KIDCIRCLE</span>
+                    </div>
+                    <p class="footer-desc">Платформа для поиска и организации детских кружков и секций</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Родителям</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Найти кружки</a></li>
+                        <li><a href="#">Пройти тест</a></li>
+                        <li><a href="#">Как записаться</a></li>
+                        <li><a href="#">Вопросы и ответы</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Организациям</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Добавить организацию</a></li>
+                        <li><a href="#">Тарифы</a></li>
+                        <li><a href="#">Возможности</a></li>
+                        <li><a href="#">Партнерская программа</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">О компании</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#">Пользовательское соглашение</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 KIDCIRCLE. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Вход в KIDCIRCLE</h3>
+                <div class="modal-close" data-modal="login-modal">&times;</div>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Вход</div>
+                    <div class="auth-tab" data-tab="register">Регистрация</div>
+                </div>
+                
+                <div class="user-type-selector">
+                    <div class="user-type active" data-type="parent">
+                        <i class="fas fa-user"></i>
+                        <h4>Родитель</h4>
+                        <p>Ищу кружки для ребенка</p>
+                    </div>
+                    <div class="user-type" data-type="organization">
+                        <i class="fas fa-building"></i>
+                        <h4>Организация</h4>
+                        <p>Предоставляю услуги</p>
+                    </div>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="Ваш email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Пароль</label>
+                        <input type="password" class="form-input" placeholder="Ваш пароль" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Войти</button>
+                    
+                    <div class="form-footer">
+                        <a href="#">Забыли пароль?</a>
+                    </div>
+                </form>
+                
+                <form id="register-form" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Имя</label>
+                        <input type="text" class="form-input" placeholder="Ваше имя" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="Ваш email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Пароль</label>
+                        <input type="password" class="form-input" placeholder="Придумайте пароль" required>
+                    </div>
+                    
+                    <div class="form-group" id="org-name-field" style="display: none;">
+                        <label class="form-label">Название организации</label>
+                        <input type="text" class="form-input" placeholder="Название вашей организации">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Зарегистрироваться</button>
+                    
+                    <div class="form-footer">
+                        Нажимая на кнопку, вы соглашаетесь с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auth Modals
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const heroRegisterBtn = document.getElementById('hero-register-btn');
+        const ctaRegisterBtn = document.getElementById('cta-register-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeModalButtons = document.querySelectorAll('.modal-close');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const userTypes = document.querySelectorAll('.user-type');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const orgNameField = document.getElementById('org-name-field');
+        
+        // Open modal
+        function openModal(modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close modal
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Switch between login and register tabs
+        function switchAuthTab(tabName) {
+            authTabs.forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            if (tabName === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+        }
+        
+        // Switch user type
+        function switchUserType(type) {
+            userTypes.forEach(userType => {
+                if (userType.dataset.type === type) {
+                    userType.classList.add('active');
+                } else {
+                    userType.classList.remove('active');
+                }
+            });
+            
+            if (type === 'organization') {
+                orgNameField.style.display = 'block';
+            } else {
+                orgNameField.style.display = 'none';
+            }
+        }
+        
+        // Event listeners
+        loginBtn.addEventListener('click', () => openModal(loginModal));
+        registerBtn.addEventListener('click', () => {
+            openModal(loginModal);
+            switchAuthTab('register');
+        });
+        heroRegisterBtn.addEventListener('click', () => {
+            openModal(loginModal);
+            switchAuthTab('register');
+        });
+        ctaRegisterBtn.addEventListener('click', () => {
+            openModal(loginModal);
+            switchAuthTab('register');
+        });
+        
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modalId = button.dataset.modal;
+                const modal = document.getElementById(modalId);
+                closeModal(modal);
+            });
+        });
+        
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchAuthTab(tab.dataset.tab);
+            });
+        });
+        
+        userTypes.forEach(userType => {
+            userType.addEventListener('click', () => {
+                switchUserType(userType.dataset.type);
+            });
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal(e.target);
+            }
+        });
+        
+        // Form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userType = document.querySelector('.user-type.active').dataset.type;
+            alert(`Вход выполнен как: ${userType === 'parent' ? 'Родитель' : 'Организация'}`);
+            closeModal(loginModal);
+            
+            // Redirect based on user type
+            if (userType === 'parent') {
+                // Redirect to parent app
+                window.location.href = 'parent-app.html';
+            } else {
+                // Redirect to organization app
+                window.location.href = 'organization-app.html';
+            }
+        });
+        
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userType = document.querySelector('.user-type.active').dataset.type;
+            alert(`Регистрация выполнена как: ${userType === 'parent' ? 'Родитель' : 'Организация'}`);
+            closeModal(loginModal);
+            
+            // Redirect based on user type
+            if (userType === 'parent') {
+                // Redirect to parent app
+                window.location.href = 'parent-app.html';
+            } else {
+                // Redirect to organization app
+                window.location.href = 'organization-app.html';
+            }
+        });
+    </script>
+</body>
+</html>
