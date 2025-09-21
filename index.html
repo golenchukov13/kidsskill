@@ -733,7 +733,7 @@
             
             <div class="auth-buttons">
                 <button class="btn btn-outline" id="login-btn">Войти</button>
-                <button class="btn btn-primary" id="register-btn">Регистрация</button>
+                <!-- <button class="btn btn-primary" id="register-btn">Регистрация</button> -->
             </div>
         </div>
     </header>
@@ -1027,6 +1027,8 @@
                     
                     <div class="form-footer">
                         <a href="#">Забыли пароль?</a>
+                        <br>
+                        <a href="#" id="to-register-link" style="margin-top:10px;display:inline-block;">Нет аккаунта? Зарегистрироваться</a>
                     </div>
                 </form>
                 
@@ -1064,7 +1066,7 @@
     <script>
         // Auth Modals
         const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
+        // const registerBtn = document.getElementById('register-btn'); // удаляем регистрацию из шапки
         const heroRegisterBtn = document.getElementById('hero-register-btn');
         const ctaRegisterBtn = document.getElementById('cta-register-btn');
         const loginModal = document.getElementById('login-modal');
@@ -1074,6 +1076,7 @@
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const orgNameField = document.getElementById('org-name-field');
+        const toRegisterLink = document.getElementById('to-register-link');
         
         // Open modal
         function openModal(modal) {
@@ -1125,10 +1128,6 @@
         
         // Event listeners
         loginBtn.addEventListener('click', () => openModal(loginModal));
-        registerBtn.addEventListener('click', () => {
-            openModal(loginModal);
-            switchAuthTab('register');
-        });
         heroRegisterBtn.addEventListener('click', () => {
             openModal(loginModal);
             switchAuthTab('register');
@@ -1158,6 +1157,11 @@
             });
         });
         
+        toRegisterLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchAuthTab('register');
+        });
+        
         // Close modal when clicking outside
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal-overlay')) {
@@ -1174,10 +1178,8 @@
             
             // Redirect based on user type
             if (userType === 'parent') {
-                // Redirect to parent app
-                window.location.href = 'parent-app.html';
+                window.location.href = 'https://golenchukov13.github.io/test-/';
             } else {
-                // Redirect to organization app
                 window.location.href = 'organization-app.html';
             }
         });
