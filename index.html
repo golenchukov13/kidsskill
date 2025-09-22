@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIDCIRCLE - Платформа для детского развития</title>
+    <title>KIDCIRCLE - Инновационная платформа для детского развития</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,7 +16,9 @@
             --dark: #1f2430;
             --gray: #8a93a6;
             --light-gray: #e2e8f0;
-            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --neon: #00fff0;
+            --neon-2: #a56eff;
         }
         
         * {
@@ -30,6 +32,7 @@
             color: var(--dark);
             line-height: 1.6;
             overflow-x: hidden;
+            background-color: #f9fafe;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -44,14 +47,32 @@
             padding: 0 20px;
         }
         
+        /* Particle Canvas Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
         /* Header */
         header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            padding: 5px 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
         }
         
         .header-container {
@@ -66,14 +87,43 @@
             align-items: center;
             gap: 0.5rem;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--primary);
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
         
         .logo-icon {
             color: var(--secondary);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
+            transition: var(--transition);
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .logo:hover .logo-icon {
+            transform: rotate(15deg) scale(1.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+        
+        .logo:hover::after {
+            transform: translateX(0);
         }
         
         .nav-menu {
@@ -86,10 +136,35 @@
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
         }
         
         .nav-link:hover {
             color: var(--primary);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
         }
         
         .auth-buttons {
@@ -98,12 +173,37 @@
         }
         
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-2) 100%);
+            z-index: -1;
+            transition: var(--transition);
+        }
+        
+        .btn:hover::before {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.4);
         }
         
         .btn-outline {
@@ -112,261 +212,549 @@
             color: var(--primary);
         }
         
-        .btn-outline:hover {
+        .btn-outline::before {
             background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+        
+        .btn-outline:hover {
             color: white;
+            border-color: transparent;
+        }
+        
+        .btn-outline:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
         }
         
         .btn-primary {
-            background: var(--primary);
             color: white;
-            border: 2px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
         }
         
         .btn-primary:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
         }
         
         /* Hero Section */
         .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f5f7ff 0%, #e5e9ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px; /* высота header */
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .hero-content {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        @media (max-width: 992px) {
+            .hero {
+                min-height: 100vh;
+                padding-top: 80px;
+            }
+            .hero-content {
+                min-height: calc(100vh - 80px);
+            }
+        }
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 100vh;
+                padding-top: 80px;
+            }
+            .hero-content {
+                min-height: calc(100vh - 80px);
+            }
         }
         
         .hero-content {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 60px;
         }
         
         .hero-text {
             flex: 1;
+            position: relative;
+            z-index: 2;
         }
         
         .hero-title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 20px;
             line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 10px rgba(108, 92, 231, 0.2);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(108, 92, 231, 0.4);
+            }
         }
         
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--gray);
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            max-width: 90%;
         }
         
         .hero-buttons {
             display: flex;
-            gap: 15px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         
         .hero-image {
             flex: 1;
             text-align: center;
+            position: relative;
+        }
+        
+        .hero-img-container {
+            position: relative;
+            display: inline-block;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+            transition: var(--transition);
+        }
+        
+        .hero-img-container:hover {
+            transform: perspective(1000px) rotateY(0) rotateX(0);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
         }
         
         .hero-image img {
             max-width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: floatElement 8s infinite ease-in-out;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: -30px;
+            background: var(--primary);
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: -30px;
+            background: var(--secondary);
+            animation-delay: -2s;
+        }
+        
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 30%;
+            background: var(--accent);
+            animation-delay: -4s;
+        }
+        
+        @keyframes floatElement {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            66% {
+                transform: translateY(10px) rotate(-5deg);
+            }
         }
         
         /* Features Section */
         .features {
-            padding: 100px 0;
-            background: white;
+            padding: 120px 0;
+            position: relative;
         }
         
         .section-title {
+            display: block;
+            width: 100%;
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transform: scaleX(0.7);
+            transition: var(--transition);
+        }
+        
+        .section-title:hover::after {
+            transform: scaleX(1);
         }
         
         .section-subtitle {
             text-align: center;
             color: var(--gray);
-            margin-bottom: 60px;
+            margin-bottom: 80px;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            font-size: 1.2rem;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 2;
         }
         
         .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             transition: var(--transition);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: var(--transition);
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
         
         .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(108, 92, 231, 0.1);
-            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-2) 100%);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 1.8rem;
-            color: var(--primary);
+            margin: 0 auto 25px;
+            font-size: 2.2rem;
+            color: white;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotateY(180deg);
+        }
+        
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%) skewX(-15deg);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon::after {
+            animation: shine 1s forwards;
+        }
+        
+        @keyframes shine {
+            100% {
+                transform: translateX(200%) skewX(-15deg);
+            }
         }
         
         .feature-title {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 15px;
+            color: var(--dark);
         }
         
         .feature-desc {
             color: var(--gray);
+            line-height: 1.7;
         }
         
         /* For Parents Section */
         .for-parents {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f5f7ff 0%, #e5e9ff 100%);
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
         }
         
         .parents-content {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 60px;
         }
         
         .parents-image {
             flex: 1;
+            position: relative;
+        }
+        
+        .parents-img-container {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateY(10deg);
+            transition: var(--transition);
+        }
+        
+        .parents-img-container:hover {
+            transform: perspective(1000px) rotateY(0);
         }
         
         .parents-image img {
             max-width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: block;
+            transition: var(--transition);
         }
         
         .parents-text {
             flex: 1;
+            position: relative;
+            z-index: 2;
         }
         
         .parents-title {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .parents-list {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .parents-list li {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 15px;
+            transition: var(--transition);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .parents-list li:hover {
+            background: rgba(108, 92, 231, 0.05);
+            transform: translateX(10px);
         }
         
         .parents-list li i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .parents-list li span {
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
         
         /* For Organizations Section */
         .for-organizations {
-            padding: 100px 0;
-            background: white;
+            padding: 120px 0;
+            position: relative;
         }
         
         .orgs-content {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 60px;
         }
         
         .orgs-text {
             flex: 1;
+            position: relative;
+            z-index: 2;
         }
         
         .orgs-title {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .orgs-list {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .orgs-list li {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 15px;
+            transition: var(--transition);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .orgs-list li:hover {
+            background: rgba(108, 92, 231, 0.05);
+            transform: translateX(10px);
         }
         
         .orgs-list li i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .orgs-list li span {
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
         
         .orgs-image {
             flex: 1;
+            position: relative;
+        }
+        
+        .orgs-img-container {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: var(--transition);
+        }
+        
+        .orgs-img-container:hover {
+            transform: perspective(1000px) rotateY(0);
         }
         
         .orgs-image img {
             max-width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: block;
+            transition: var(--transition);
         }
         
         /* Testimonials Section */
         .testimonials {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f5f7ff 0%, #e5e9ff 100%);
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
         }
         
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 2;
         }
         
         .testimonial-card {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
         }
         
         .testimonial-text {
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             position: relative;
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
         
         .testimonial-text:before {
-            content: """;
-            font-size: 4rem;
+            content: "“";
+            font-size: 6rem;
             color: var(--primary);
-            opacity: 0.2;
+            opacity: 0.1;
             position: absolute;
-            top: -20px;
-            left: -10px;
+            top: -30px;
+            left: -15px;
             font-family: serif;
+            line-height: 1;
         }
         
         .testimonial-author {
@@ -376,50 +764,244 @@
         }
         
         .author-avatar {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-2) 100%);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
+            font-size: 1.5rem;
+            flex-shrink: 0;
         }
         
         .author-info h4 {
             margin-bottom: 5px;
+            font-size: 1.2rem;
         }
         
         .author-role {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
         
-        /* CTA Section */
+        /* CTA Section с волнами и анимацией */
         .cta {
-            padding: 100px 0;
-            background: var(--primary);
+            padding: 120px 0 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-2) 100%);
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
+        .cta-wave {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cta-wave.top {
+            top: -1px;
+        }
+        .cta-wave.bottom {
+            bottom: -1px;
+            transform: rotate(180deg);
+        }
         .cta-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            font-weight: 800;
         }
-        
         .cta-subtitle {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .btn-cta {
+            font-size: 1.3rem;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 8px 30px rgba(108,92,231,0.25);
+            transition: 0.3s;
+            background: white;
+            color: var(--primary);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-cta:hover {
+            background: var(--secondary);
+            color: white;
+            transform: scale(1.07);
+            box-shadow: 0 16px 40px rgba(255,107,107,0.25);
+        }
+        .btn-cta-dark {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        .btn-cta-dark:hover {
+            background: white;
+            color: var(--primary);
+        }
+        /* --- Новый футер --- */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 0 0;
+            position: relative;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .footer-desc {
+            color: var(--light-gray);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        .footer-links {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .footer-socials a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            transition: 0.3s;
+        }
+        .footer-socials a:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.15);
+        }
+        .footer-contact {
+            margin-top: 18px;
+            color: var(--light-gray);
+            font-size: 1.05rem;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--light-gray);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+        }
+        .footer-animated-line {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: footerLineMove 3s linear infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes footerLineMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 0; }
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='2' /%3E%3C/svg%3E");
+            background-size: 50px;
+            opacity: 0.3;
+        }
+        
+        .cta-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-subtitle {
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
         
         .cta-buttons {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .btn-light {
@@ -431,6 +1013,8 @@
         .btn-light:hover {
             background: transparent;
             color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
         }
         
         .btn-dark {
@@ -442,20 +1026,25 @@
         .btn-dark:hover {
             background: white;
             color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
         }
         
         /* Footer */
         footer {
             background: var(--dark);
             color: white;
-            padding: 70px 0 30px;
+            padding: 100px 0 40px;
+            position: relative;
         }
         
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
         }
         
         .footer-logo {
@@ -463,14 +1052,15 @@
             align-items: center;
             gap: 0.5rem;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: white;
             margin-bottom: 20px;
         }
         
         .footer-desc {
             color: var(--light-gray);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            line-height: 1.7;
         }
         
         .social-links {
@@ -479,8 +1069,8 @@
         }
         
         .social-link {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             display: flex;
@@ -488,16 +1078,31 @@
             justify-content: center;
             color: white;
             transition: var(--transition);
+            font-size: 1.2rem;
         }
         
         .social-link:hover {
             background: var(--primary);
+            transform: translateY(-5px);
         }
         
         .footer-title {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
             color: white;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
         }
         
         .footer-links {
@@ -505,25 +1110,29 @@
         }
         
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         
         .footer-links a {
             color: var(--light-gray);
             text-decoration: none;
             transition: var(--transition);
+            display: inline-block;
         }
         
         .footer-links a:hover {
             color: white;
+            transform: translateX(5px);
         }
         
         .footer-bottom {
             text-align: center;
-            padding-top: 30px;
+            padding-top: 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--light-gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
         }
         
         /* Auth Modals */
@@ -533,7 +1142,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -541,6 +1150,7 @@
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
+            backdrop-filter: blur(5px);
         }
         
         .modal-overlay.active {
@@ -550,22 +1160,23 @@
         
         .modal {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             width: 90%;
             max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transform: translateY(20px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(30px) scale(0.95);
             transition: var(--transition);
+            position: relative;
         }
         
         .modal-overlay.active .modal {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
         
         .modal-header {
-            padding: 20px;
+            padding: 25px 30px;
             border-bottom: 1px solid var(--light-gray);
             display: flex;
             justify-content: space-between;
@@ -573,32 +1184,50 @@
         }
         
         .modal-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .modal-close {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: var(--gray);
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            background: var(--light-gray);
+            color: var(--dark);
         }
         
         .modal-body {
-            padding: 20px;
+            padding: 30px;
         }
         
         .auth-tabs {
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             border-bottom: 1px solid var(--light-gray);
         }
         
         .auth-tab {
-            padding: 12px 20px;
+            padding: 15px 25px;
             cursor: pointer;
             font-weight: 600;
             color: var(--gray);
             transition: var(--transition);
             border-bottom: 3px solid transparent;
+            flex: 1;
+            text-align: center;
         }
         
         .auth-tab.active {
@@ -609,15 +1238,15 @@
         .user-type-selector {
             display: flex;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .user-type {
             flex: 1;
             text-align: center;
-            padding: 15px;
+            padding: 20px 15px;
             border: 2px solid var(--light-gray);
-            border-radius: 12px;
+            border-radius: 15px;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -625,16 +1254,24 @@
         .user-type.active {
             border-color: var(--primary);
             background: rgba(108, 92, 231, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.1);
         }
         
         .user-type i {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .user-type.active i {
+            transform: scale(1.2);
         }
         
         .user-type h4 {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
         
         .user-type p {
@@ -643,88 +1280,209 @@
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
+            color: var(--dark);
         }
         
         .form-input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--light-gray);
-            border-radius: 8px;
+            padding: 15px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
             font-family: 'Nunito', sans-serif;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+            outline: none;
         }
         
         .form-footer {
-            margin-top: 20px;
+            margin-top: 25px;
             text-align: center;
         }
         
         .form-footer a {
             color: var(--primary);
             text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .mobile-menu-btn span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Animation on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-1 {
+            transition-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            transition-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            transition-delay: 0.6s;
         }
         
         /* Responsive */
         @media (max-width: 992px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .hero-content, .parents-content, .orgs-content {
                 flex-direction: column;
                 text-align: center;
             }
             
-            .hero-buttons, .parents-buttons {
+            .hero-buttons, .parents-buttons, .cta-buttons {
                 justify-content: center;
             }
             
-            .testimonials-grid {
-                grid-template-columns: 1fr;
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.4rem;
+            }
+            
+            .parents-title, .orgs-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-img-container, .parents-img-container, .orgs-img-container {
+                transform: none !important;
+            }
+            
+            .floating-elements {
+                display: none;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 40px 20px;
+                gap: 30px;
+                transform: translateX(-100%);
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
             }
         }
         
         @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-menu {
-                display: none;
-            }
-            
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
             }
             
             .section-title {
                 font-size: 2rem;
             }
+            
+            .feature-card, .testimonial-card {
+                padding: 30px 20px;
+            }
+            
+            .auth-tabs {
+                flex-direction: column;
+            }
+            
+            .user-type-selector {
+                flex-direction: column;
+            }
+            
+            .cta-title {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
     <!-- Header -->
-    <header>
+    <header id="header">
         <div class="container header-container">
             <a href="#" class="logo">
                 <i class="fas fa-child logo-icon"></i>
                 <span>KIDCIRCLE</span>
             </a>
             
-            <nav class="nav-menu">
-                <a href="#" class="nav-link">Главная</a>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active">Главная</a>
                 <a href="#features" class="nav-link">Возможности</a>
                 <a href="#for-parents" class="nav-link">Родителям</a>
                 <a href="#for-organizations" class="nav-link">Организациям</a>
@@ -733,24 +1491,40 @@
             
             <div class="auth-buttons">
                 <button class="btn btn-outline" id="login-btn">Войти</button>
-                <!-- <button class="btn btn-primary" id="register-btn">Регистрация</button> -->
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="container hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">Найдите идеальные кружки для развития вашего ребенка</h1>
-                <p class="hero-subtitle">KIDCIRCLE соединяет родителей с лучшими детскими кружками и секциями, а организации — с целевой аудиторией</p>
+            <div class="hero-text fade-in">
+                <h1 class="hero-title">Раскройте таланты вашего ребенка с KIDCIRCLE</h1>
+                <p class="hero-subtitle">Инновационная платформа, которая помогает родителям находить идеальные кружки и секции для детей, а организациям — привлекать целевую аудиторию и эффективно управлять занятиями</p>
                 <div class="hero-buttons">
-                    <button class="btn btn-primary" id="hero-register-btn">Начать сейчас</button>
-                    <button class="btn btn-outline">Узнать больше</button>
+                    <button class="btn btn-primary" id="hero-register-btn">
+                        <i class="fas fa-rocket"></i> Начать бесплатно
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-play-circle"></i> Смотреть видео
+                    </button>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="https://placehold.co/600x400/6c5ce7/white?text=KIDCIRCLE" alt="KIDCIRCLE">
+            <div class="hero-image fade-in delay-1">
+                <div class="hero-img-container">
+                    <img src="https://placehold.co/600x400/6c5ce7/white?text=KIDCIRCLE" alt="KIDCIRCLE">
+                </div>
+                <div class="floating-elements">
+                    <div class="floating-element">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="floating-element">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="floating-element">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -758,56 +1532,56 @@
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
-            <h2 class="section-title">Почему выбирают KIDCIRCLE</h2>
-            <p class="section-subtitle">Мы создали универсальную платформу для поиска и организации детских кружков с заботой о потребностях всех участников</p>
+            <h2 class="section-title fade-in">Почему выбирают KIDCIRCLE</h2>
+            <p class="section-subtitle fade-in delay-1">Мы создали универсальную платформу для поиска и организации детских кружков с заботой о потребностях всех участников</p>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-search"></i>
                     </div>
                     <h3 class="feature-title">Умный поиск</h3>
-                    <p class="feature-desc">AI-технологии для подбора кружков по интересам, возрасту и расположению</p>
+                    <p class="feature-desc">AI-технологии для подбора кружков по интересам, возрасту и расположению. Находите идеальные занятия за секунды!</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in delay-1">
                     <div class="feature-icon">
                         <i class="fas fa-robot"></i>
                     </div>
                     <h3 class="feature-title">Тест способностей</h3>
-                    <p class="feature-desc">Помогаем определить таланты ребенка и подобрать подходящие занятия</p>
+                    <p class="feature-desc">Помогаем определить таланты ребенка и подобрать подходящие занятия. Откройте потенциал вашего ребенка!</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in delay-2">
                     <div class="feature-icon">
                         <i class="fas fa-calendar-check"></i>
                     </div>
                     <h3 class="feature-title">Онлайн-запись</h3>
-                    <p class="feature-desc">Удобное бронирование и оплата занятий в несколько кликов</p>
+                    <p class="feature-desc">Удобное бронирование и оплата занятий в несколько кликов. Забудьте о бумажной волоките!</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3 class="feature-title">Аналитика</h3>
-                    <p class="feature-desc">Для организаций: отслеживание посещаемости, финансов и эффективности</p>
+                    <p class="feature-desc">Для организаций: отслеживание посещаемости, финансов и эффективности. Увеличьте доходность вашего бизнеса!</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in delay-1">
                     <div class="feature-icon">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3 class="feature-title">Управление клиентами</h3>
-                    <p class="feature-desc">Система учета учеников, напоминаний и коммуникации с родителями</p>
+                    <p class="feature-desc">Система учета учеников, напоминаний и коммуникации с родителями. Все инструменты в одном месте!</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in delay-2">
                     <div class="feature-icon">
                         <i class="fas fa-star"></i>
                     </div>
                     <h3 class="feature-title">Репутация</h3>
-                    <p class="feature-desc">Система отзывов и рейтингов для повышения доверия к организациям</p>
+                    <p class="feature-desc">Система отзывов и рейтингов для повышения доверия к организациям. Стройте репутацию и привлекайте клиентов!</p>
                 </div>
             </div>
         </div>
@@ -816,20 +1590,39 @@
     <!-- For Parents Section -->
     <section class="for-parents" id="for-parents">
         <div class="container parents-content">
-            <div class="parents-image">
-                <img src="https://placehold.co/500x400/6c5ce7/white?text=Для+родителей" alt="Для родителей">
+            <div class="parents-image fade-in">
+                <div class="parents-img-container">
+                    <img src="https://placehold.co/500x400/6c5ce7/white?text=Для+родителей" alt="Для родителей">
+                </div>
             </div>
-            <div class="parents-text">
+            <div class="parents-text fade-in delay-1">
                 <h2 class="parents-title">Для родителей</h2>
                 <ul class="parents-list">
-                    <li><i class="fas fa-check"></i> Находите проверенные кружки и секции рядом с домом</li>
-                    <li><i class="fas fa-check"></i> Проходите AI-тест для определения способностей ребенка</li>
-                    <li><i class="fas fa-check"></i> Бронируйте и оплачивайте занятия онлайн</li>
-                    <li><i class="fas fa-check"></i> Получайте напоминания о занятиях и событиях</li>
-                    <li><i class="fas fa-check"></i> Читайте отзывы других родителей и делитесь своим опытом</li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Находите проверенные кружки и секции рядом с домом с реальными отзывами</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Проходите AI-тест для определения способностей ребенка и получайте персонализированные рекомендации</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Бронируйте и оплачивайте занятия онлайн без скрытых комиссий</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Получайте напоминания о занятиях и отслеживайте прогресс ребенка</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Читайте отзывы других родителей и делитесь своим опытом в сообществе</span>
+                    </li>
                 </ul>
                 <div class="parents-buttons">
-                    <button class="btn btn-primary">Найти кружки</button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-search"></i> Найти кружки
+                    </button>
                 </div>
             </div>
         </div>
@@ -838,21 +1631,40 @@
     <!-- For Organizations Section -->
     <section class="for-organizations" id="for-organizations">
         <div class="container orgs-content">
-            <div class="orgs-text">
+            <div class="orgs-text fade-in">
                 <h2 class="orgs-title">Для организаций</h2>
                 <ul class="orgs-list">
-                    <li><i class="fas fa-check"></i> Привлекайте целевую аудиторию — родителей вашего региона</li>
-                    <li><i class="fas fa-check"></i> Управляйте расписанием и записью на занятия</li>
-                    <li><i class="fas fa-check"></i> Автоматизируйте финансовый учет и отчетность</li>
-                    <li><i class="fas fa-check"></i> Собирайте отзывы и улучшайте свой сервис</li>
-                    <li><i class="fas fa-check"></i> Используйте аналитику для повышения эффективности</li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Привлекайте целевую аудиторию — родителей вашего региона, заинтересованных в развитии детей</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Управляйте расписанием и записью на занятия через удобный личный кабинет</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Автоматизируйте финансовый учет и отчетность — все платежи в одном месте</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Собирайте отзывы и улучшайте свой сервис на основе обратной связи</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>Используйте аналитику для повышения эффективности и увеличения прибыли</span>
+                    </li>
                 </ul>
                 <div class="orgs-buttons">
-                    <button class="btn btn-primary">Зарегистрировать организацию</button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-building"></i> Зарегистрировать организацию
+                    </button>
                 </div>
             </div>
-            <div class="orgs-image">
-                <img src="https://placehold.co/500x400/6c5ce7/white?text=Для+организаций" alt="Для организаций">
+            <div class="orgs-image fade-in delay-1">
+                <div class="orgs-img-container">
+                    <img src="https://placehold.co/500x400/6c5ce7/white?text=Для+организаций" alt="Для организаций">
+                </div>
             </div>
         </div>
     </section>
@@ -860,13 +1672,13 @@
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="container">
-            <h2 class="section-title">Что говорят наши пользователи</h2>
-            <p class="section-subtitle">Узнайте от реальных пользователей, как KIDCIRCLE изменил их опыт поиска и организации детских кружков</p>
+            <h2 class="section-title fade-in">Что говорят наши пользователи</h2>
+            <p class="section-subtitle fade-in delay-1">Узнайте от реальных пользователей, как KIDCIRCLE изменил их опыт поиска и организации детских кружков</p>
             
             <div class="testimonials-grid">
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in">
                     <div class="testimonial-text">
-                        Благодаря KIDCIRCLE я нашла художественную студию для дочки всего в 10 минутах от дома. Тест способностей помог определить, что у нее действительно есть талант к рисованию!
+                        Благодаря KIDCIRCLE я нашла художественную студию для дочки всего в 10 минутах от дома. Тест способностей помог определить, что у нее действительно есть талант к рисованию! Теперь она с удовольствием ходит на занятия.
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">ЕК</div>
@@ -877,9 +1689,9 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in delay-1">
                     <div class="testimonial-text">
-                        Наша футбольная школа за 3 месяца работы с KIDCIRCLE увеличила количество учеников на 40%. Отличная платформа для привлечения клиентов и удобного управления записями.
+                        Наша футбольная школа за 3 месяца работы с KIDCIRCLE увеличила количество учеников на 40%. Отличная платформа для привлечения клиентов и удобного управления записями. Рекомендую всем коллегам!
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">ДМ</div>
@@ -890,9 +1702,9 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in delay-2">
                     <div class="testimonial-text">
-                        Как мама двоих детей, я ценю возможность в одном месте найти, сравнить и записать детей на кружки. Больше не нужно обзванивать десятки мест и помнить все расписания.
+                        Как мама двоих детей, я ценю возможность в одном месте найти, сравнить и записать детей на кружки. Больше не нужно обзванивать десятки мест и помнить все расписания. Экономлю несколько часов в неделю!
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">ОС</div>
@@ -903,9 +1715,9 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in">
                     <div class="testimonial-text">
-                        Система аналитики KIDCIRCLE помогла нам оптимизировать расписание и загрузку преподавателей. Теперь мы видим четкую картину по посещаемости и финансам.
+                        Система аналитики KIDCIRCLE помогла нам оптимизировать расписание и загрузку преподавателей. Теперь мы видим четкую картину по посещаемости и финансам. Выросли не только показатели, но и прибыль!
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">АВ</div>
@@ -919,20 +1731,27 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA Section с волнами и анимацией -->
     <section class="cta">
+        <svg class="cta-wave top" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z" fill="white" fill-opacity="0.15"/></svg>
         <div class="container">
-            <h2 class="cta-title">Присоединяйтесь к KIDCIRCLE</h2>
-            <p class="cta-subtitle">Начните использовать платформу уже сегодня для поиска крутков или развития вашей организации</p>
-            <div class="cta-buttons">
-                <button class="btn btn-light" id="cta-register-btn">Зарегистрироваться</button>
-                <button class="btn btn-dark">Узнать больше</button>
+            <h2 class="cta-title fade-in">Присоединяйтесь к KIDCIRCLE сегодня!</h2>
+            <p class="cta-subtitle fade-in delay-1">Более 50,000 родителей и 2,000 организаций уже используют нашу платформу. <br><b>Начните бесплатно прямо сейчас!</b></p>
+            <div class="cta-buttons fade-in delay-2">
+                <button class="btn-cta" id="cta-register-btn">
+                    <i class="fas fa-user-plus"></i> Зарегистрироваться
+                </button>
+                <button class="btn-cta btn-cta-dark">
+                    <i class="fas fa-info-circle"></i> Узнать больше
+                </button>
             </div>
         </div>
+        <svg class="cta-wave bottom" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z" fill="white" fill-opacity="0.15"/></svg>
     </section>
 
-    <!-- Footer -->
+    <!-- Новый футер -->
     <footer>
+        <div class="footer-animated-line"></div>
         <div class="container">
             <div class="footer-grid">
                 <div>
@@ -940,46 +1759,36 @@
                         <i class="fas fa-child logo-icon"></i>
                         <span>KIDCIRCLE</span>
                     </div>
-                    <p class="footer-desc">Платформа для поиска и организации детских кружков и секций</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <p class="footer-desc">Платформа для поиска и организации детских кружков и секций. Мы помогаем родителям находить лучшие занятия для детей, а организациям — развивать свой бизнес.</p>
+                    <div class="footer-socials">
+                        <a href="https://vk.com" target="_blank"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="footer-contact">
+                        <div><i class="fas fa-envelope"></i> info@kidcircle.ru</div>
+                        <div><i class="fas fa-phone"></i> +7 (999) 123-45-67</div>
                     </div>
                 </div>
-                
                 <div>
                     <h3 class="footer-title">Родителям</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Найти кружки</a></li>
-                        <li><a href="#">Пройти тест</a></li>
-                        <li><a href="#">Как записаться</a></li>
-                        <li><a href="#">Вопросы и ответы</a></li>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#for-parents">Как это работает</a></li>
+                        <li><a href="#testimonials">Отзывы</a></li>
+                        <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
-                
                 <div>
                     <h3 class="footer-title">Организациям</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Добавить организацию</a></li>
+                        <li><a href="#for-organizations">Для организаций</a></li>
                         <li><a href="#">Тарифы</a></li>
-                        <li><a href="#">Возможности</a></li>
-                        <li><a href="#">Партнерская программа</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="footer-title">О компании</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Вход для организаций</a></li>
                         <li><a href="#">Контакты</a></li>
-                        <li><a href="#">Политика конфиденциальности</a></li>
-                        <li><a href="#">Пользовательское соглашение</a></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
                 <p>&copy; 2023 KIDCIRCLE. Все права защищены.</p>
             </div>
@@ -1023,7 +1832,9 @@
                         <input type="password" class="form-input" placeholder="Ваш пароль" required>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" style="width: 100%">Войти</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%">
+                        <i class="fas fa-sign-in-alt"></i> Войти
+                    </button>
                     
                     <div class="form-footer">
                         <a href="#">Забыли пароль?</a>
@@ -1053,7 +1864,9 @@
                         <input type="text" class="form-input" placeholder="Название вашей организации">
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" style="width: 100%">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%">
+                        <i class="fas fa-user-plus"></i> Зарегистрироваться
+                    </button>
                     
                     <div class="form-footer">
                         Нажимая на кнопку, вы соглашаетесь с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a>
@@ -1063,10 +1876,102 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": ["#6c5ce7", "#ff6b6b", "#00d1b2", "#a56eff"]
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#6c5ce7",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": true,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+
         // Auth Modals
         const loginBtn = document.getElementById('login-btn');
-        // const registerBtn = document.getElementById('register-btn'); // удаляем регистрацию из шапки
         const heroRegisterBtn = document.getElementById('hero-register-btn');
         const ctaRegisterBtn = document.getElementById('cta-register-btn');
         const loginModal = document.getElementById('login-modal');
@@ -1077,6 +1982,24 @@
         const registerForm = document.getElementById('register-form');
         const orgNameField = document.getElementById('org-name-field');
         const toRegisterLink = document.getElementById('to-register-link');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+        
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
         
         // Open modal
         function openModal(modal) {
@@ -1180,7 +2103,7 @@
             if (userType === 'parent') {
                 window.location.href = 'https://golenchukov13.github.io/test-/';
             } else {
-                window.location.href = 'organization-app.html';
+                window.location.href = 'https://golenchukov13.github.io/test2/';
             }
         });
         
@@ -1192,12 +2115,86 @@
             
             // Redirect based on user type
             if (userType === 'parent') {
-                // Redirect to parent app
-                window.location.href = 'parent-app.html';
+                window.location.href = 'https://golenchukov13.github.io/test-/';
             } else {
-                // Redirect to organization app
-                window.location.href = 'organization-app.html';
+                window.location.href = 'https://golenchukov13.github.io/test2/';
             }
+        });
+        
+        // Scroll animations
+        function checkScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < window.innerHeight - elementVisible) {
+                    el.classList.add('visible');
+                }
+            });
+            
+            // Header background on scroll
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Active menu link on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Initialize animations
+        checkScroll();
+
+        // Автоскролл к секции "Главная" при загрузке страницы
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (!location.hash || location.hash === '#home') {
+                    const homeSection = document.getElementById('home');
+                    if (homeSection) {
+                        window.scrollTo({
+                            top: homeSection.offsetTop - 80,
+                            behavior: 'auto'
+                        });
+                    }
+                }
+            }, 100);
         });
     </script>
 </body>
