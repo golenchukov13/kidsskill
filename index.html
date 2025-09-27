@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIDCIRCLE - Инновационная платформа для детского развития</title>
+    <title>KIDCIRCLE - Найти кружки для ребенка стало проще, чем заказать пиццу</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -19,6 +19,7 @@
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             --neon: #00fff0;
             --neon-2: #a56eff;
+            --success: #00b894;
         }
         
         * {
@@ -231,11 +232,12 @@
         .btn-primary {
             color: white;
             box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
         }
         
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
         }
         
         /* Hero Section */
@@ -249,36 +251,13 @@
             width: 100%;
             overflow: hidden;
         }
+        
         .hero-content {
             min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-        }
-        @media (max-width: 992px) {
-            .hero {
-                min-height: 100vh;
-                padding-top: 80px;
-            }
-            .hero-content {
-                min-height: calc(100vh - 80px);
-            }
-        }
-        @media (max-width: 768px) {
-            .hero {
-                min-height: 100vh;
-                padding-top: 80px;
-            }
-            .hero-content {
-                min-height: calc(100vh - 80px);
-            }
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            gap: 60px;
         }
         
         .hero-text {
@@ -310,8 +289,32 @@
         .hero-subtitle {
             font-size: 1.3rem;
             color: var(--gray);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             max-width: 90%;
+        }
+        
+        .social-proof {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stats {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
         }
         
         .hero-buttons {
@@ -403,10 +406,12 @@
             }
         }
         
-        /* Features Section */
-        .features {
-            padding: 120px 0;
+        /* How it works section */
+        .how-it-works {
+            padding: 100px 0;
+            background: rgba(108, 92, 231, 0.05);
             position: relative;
+            overflow: hidden;
         }
         
         .section-title {
@@ -443,6 +448,69 @@
             margin-left: auto;
             margin-right: auto;
             font-size: 1.2rem;
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-2) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+            transition: var(--transition);
+        }
+        
+        .step:hover .step-number {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .step p {
+            color: var(--gray);
+            max-width: 250px;
+            margin: 0 auto;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            position: relative;
         }
         
         .features-grid {
@@ -540,6 +608,41 @@
             line-height: 1.7;
         }
         
+        /* Trust badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .badge span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
         /* For Parents Section */
         .for-parents {
             padding: 120px 0;
@@ -612,7 +715,7 @@
         }
         
         .parents-list li i {
-            color: var(--primary);
+            color: var(--success);
             font-size: 1.5rem;
             margin-top: 3px;
             flex-shrink: 0;
@@ -627,6 +730,7 @@
         .for-organizations {
             padding: 120px 0;
             position: relative;
+            background: rgba(108, 92, 231, 0.05);
         }
         
         .orgs-content {
@@ -671,7 +775,7 @@
         }
         
         .orgs-list li i {
-            color: var(--primary);
+            color: var(--success);
             font-size: 1.5rem;
             margin-top: 3px;
             flex-shrink: 0;
@@ -796,6 +900,7 @@
             position: relative;
             overflow: hidden;
         }
+        
         .cta-wave {
             position: absolute;
             left: 0;
@@ -804,13 +909,16 @@
             pointer-events: none;
             z-index: 1;
         }
+        
         .cta-wave.top {
             top: -1px;
         }
+        
         .cta-wave.bottom {
             bottom: -1px;
             transform: rotate(180deg);
         }
+        
         .cta-title {
             font-size: 3rem;
             margin-bottom: 20px;
@@ -818,6 +926,7 @@
             letter-spacing: 1px;
             font-weight: 800;
         }
+        
         .cta-subtitle {
             margin-bottom: 50px;
             max-width: 700px;
@@ -826,6 +935,27 @@
             font-size: 1.3rem;
             opacity: 0.95;
         }
+        
+        .limited-offer {
+            margin-bottom: 30px;
+        }
+        
+        .offer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .offer-badge i {
+            animation: pulse 2s infinite;
+        }
+        
         .cta-buttons {
             display: flex;
             gap: 30px;
@@ -833,6 +963,7 @@
             flex-wrap: wrap;
             margin-top: 30px;
         }
+        
         .btn-cta {
             font-size: 1.3rem;
             padding: 18px 40px;
@@ -846,34 +977,40 @@
             position: relative;
             overflow: hidden;
         }
+        
         .btn-cta:hover {
             background: var(--secondary);
             color: white;
             transform: scale(1.07);
             box-shadow: 0 16px 40px rgba(255,107,107,0.25);
         }
+        
         .btn-cta-dark {
             background: transparent;
             color: white;
             border: 2px solid white;
         }
+        
         .btn-cta-dark:hover {
             background: white;
             color: var(--primary);
         }
-        /* --- Новый футер --- */
+        
+        /* Footer */
         footer {
             background: var(--dark);
             color: white;
             padding: 80px 0 0 0;
             position: relative;
         }
+        
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             margin-bottom: 40px;
         }
+        
         .footer-logo {
             display: flex;
             align-items: center;
@@ -883,11 +1020,13 @@
             color: white;
             margin-bottom: 20px;
         }
+        
         .footer-desc {
             color: var(--light-gray);
             margin-bottom: 30px;
             line-height: 1.7;
         }
+        
         .footer-title {
             font-size: 1.3rem;
             margin-bottom: 25px;
@@ -895,6 +1034,7 @@
             position: relative;
             display: inline-block;
         }
+        
         .footer-title::after {
             content: '';
             position: absolute;
@@ -905,28 +1045,34 @@
             background: var(--primary);
             border-radius: 2px;
         }
+        
         .footer-links {
             list-style: none;
             margin-bottom: 20px;
         }
+        
         .footer-links li {
             margin-bottom: 12px;
         }
+        
         .footer-links a {
             color: var(--light-gray);
             text-decoration: none;
             transition: var(--transition);
             display: inline-block;
         }
+        
         .footer-links a:hover {
             color: var(--primary);
             transform: translateX(5px);
         }
+        
         .footer-socials {
             display: flex;
             gap: 15px;
             margin-top: 10px;
         }
+        
         .footer-socials a {
             width: 38px;
             height: 38px;
@@ -939,16 +1085,19 @@
             font-size: 1.3rem;
             transition: 0.3s;
         }
+        
         .footer-socials a:hover {
             background: var(--primary);
             color: white;
             transform: scale(1.15);
         }
+        
         .footer-contact {
             margin-top: 18px;
             color: var(--light-gray);
             font-size: 1.05rem;
         }
+        
         .footer-bottom {
             text-align: center;
             padding-top: 40px;
@@ -958,6 +1107,7 @@
             position: relative;
             z-index: 2;
         }
+        
         .footer-animated-line {
             width: 100%;
             height: 4px;
@@ -965,6 +1115,7 @@
             animation: footerLineMove 3s linear infinite;
             margin-bottom: 10px;
         }
+        
         @keyframes footerLineMove {
             0% { background-position: 0 0; }
             100% { background-position: 200px 0; }
@@ -980,28 +1131,6 @@
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='2' /%3E%3C/svg%3E");
             background-size: 50px;
             opacity: 0.3;
-        }
-        
-        .cta-title {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .cta-subtitle {
-            margin-bottom: 50px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
         }
         
         .btn-light {
@@ -1028,111 +1157,6 @@
             color: var(--primary);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 100px 0 40px;
-            position: relative;
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: white;
-            margin-bottom: 20px;
-        }
-        
-        .footer-desc {
-            color: var(--light-gray);
-            margin-bottom: 30px;
-            line-height: 1.7;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .social-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-            font-size: 1.2rem;
-        }
-        
-        .social-link:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .footer-title {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: white;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .footer-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 15px;
-        }
-        
-        .footer-links a {
-            color: var(--light-gray);
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-block;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light-gray);
-            font-size: 0.95rem;
-            position: relative;
-            z-index: 2;
         }
         
         /* Auth Modals */
@@ -1410,6 +1434,20 @@
                 display: none;
             }
             
+            .timeline {
+                flex-direction: column;
+                gap: 50px;
+            }
+            
+            .timeline::before {
+                display: none;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             .nav-menu {
                 position: fixed;
                 top: 80px;
@@ -1433,6 +1471,11 @@
             
             .mobile-menu-btn {
                 display: flex;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
         }
         
@@ -1460,6 +1503,14 @@
             .cta-title {
                 font-size: 2.2rem;
             }
+            
+            .social-proof {
+                justify-content: center;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -1483,6 +1534,7 @@
             
             <nav class="nav-menu" id="nav-menu">
                 <a href="#home" class="nav-link active">Главная</a>
+                <a href="#how-it-works" class="nav-link">Как это работает</a>
                 <a href="#features" class="nav-link">Возможности</a>
                 <a href="#for-parents" class="nav-link">Родителям</a>
                 <a href="#for-organizations" class="nav-link">Организациям</a>
@@ -1491,6 +1543,7 @@
             
             <div class="auth-buttons">
                 <button class="btn btn-outline" id="login-btn">Войти</button>
+                <button class="btn btn-primary" id="header-register-btn">Начать бесплатно</button>
             </div>
         </div>
     </header>
@@ -1499,14 +1552,30 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text fade-in">
-                <h1 class="hero-title">Раскройте таланты вашего ребенка с KIDCIRCLE</h1>
-                <p class="hero-subtitle">Инновационная платформа, которая помогает родителям находить идеальные кружки и секции для детей, а организациям — привлекать целевую аудиторию и эффективно управлять занятиями</p>
+                <h1 class="hero-title">Найдите идеальный кружок для своего ребенка!</h1>
+                <p class="hero-subtitle">KIDCIRCLE — единственная платформа, где 85% родителей находят подходящие занятия с первого раза. Экономьте время на поиске и больше времени на развитие!</p>
+                
+                <div class="social-proof fade-in delay-1">
+                    <div class="stats">
+                        <span class="stat-number">50,000+</span>
+                        <span class="stat-label">родителей уже используют</span>
+                    </div>
+                    <div class="stats">
+                        <span class="stat-number">2,000+</span>
+                        <span class="stat-label">проверенных кружков</span>
+                    </div>
+                    <div class="stats">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">городов России</span>
+                    </div>
+                </div>
+                
                 <div class="hero-buttons">
                     <button class="btn btn-primary" id="hero-register-btn">
-                        <i class="fas fa-rocket"></i> Начать бесплатно
+                        <i class="fas fa-search"></i> Найти кружки в моем районе
                     </button>
                     <button class="btn btn-outline">
-                        <i class="fas fa-play-circle"></i> Смотреть видео
+                        <i class="fas fa-play-circle"></i> Смотреть видео (2 мин)
                     </button>
                 </div>
             </div>
@@ -1529,10 +1598,54 @@
         </div>
     </section>
 
+    <!-- How it works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title fade-in">Найти кружок стало проще, чем заказать пиццу</h2>
+            <p class="section-subtitle fade-in delay-1">Всего 3 простых шага отделяют вас от идеального занятия для вашего ребенка</p>
+            
+            <div class="timeline">
+                <div class="step fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Выбираете интересы ребенка</h3>
+                    <p>Укажите возраст, район и предпочтения — мы учтем все пожелания</p>
+                </div>
+                <div class="step fade-in delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Получаете персонализированную подборку</h3>
+                    <p>AI подбирает лучшие варианты рядом с домом с реальными отзывами</p>
+                </div>
+                <div class="step fade-in delay-2">
+                    <div class="step-number">3</div>
+                    <h3>Бронируете пробное занятие</h3>
+                    <p>Онлайн-запись за 2 клика без звонков и бумажной волокиты</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust badges -->
+    <div class="container">
+        <div class="trust-badges fade-in">
+            <div class="badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Гарантия безопасности данных</span>
+            </div>
+            <div class="badge">
+                <i class="fas fa-medal"></i>
+                <span>Только проверенные организации</span>
+            </div>
+            <div class="badge">
+                <i class="fas fa-clock"></i>
+                <span>Поддержка 24/7</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
-            <h2 class="section-title fade-in">Почему выбирают KIDCIRCLE</h2>
+            <h2 class="section-title fade-in">Почему KIDCIRCLE выбирают 9 из 10 родителей</h2>
             <p class="section-subtitle fade-in delay-1">Мы создали универсальную платформу для поиска и организации детских кружков с заботой о потребностях всех участников</p>
             
             <div class="features-grid">
@@ -1541,7 +1654,7 @@
                         <i class="fas fa-search"></i>
                     </div>
                     <h3 class="feature-title">Умный поиск</h3>
-                    <p class="feature-desc">AI-технологии для подбора кружков по интересам, возрасту и расположению. Находите идеальные занятия за секунды!</p>
+                    <p class="feature-desc">Находите идеальные занятия по интересам, возрасту и расположению за секунды! Больше не нужно обзванивать десятки мест.</p>
                 </div>
                 
                 <div class="feature-card fade-in delay-1">
@@ -1564,7 +1677,7 @@
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="feature-title">Аналитика</h3>
+                    <h3 class="feature-title">Аналитика для бизнеса</h3>
                     <p class="feature-desc">Для организаций: отслеживание посещаемости, финансов и эффективности. Увеличьте доходность вашего бизнеса!</p>
                 </div>
                 
@@ -1580,7 +1693,7 @@
                     <div class="feature-icon">
                         <i class="fas fa-star"></i>
                     </div>
-                    <h3 class="feature-title">Репутация</h3>
+                    <h3 class="feature-title">Репутация и отзывы</h3>
                     <p class="feature-desc">Система отзывов и рейтингов для повышения доверия к организациям. Стройте репутацию и привлекайте клиентов!</p>
                 </div>
             </div>
@@ -1596,32 +1709,32 @@
                 </div>
             </div>
             <div class="parents-text fade-in delay-1">
-                <h2 class="parents-title">Для родителей</h2>
+                <h2 class="parents-title">Для родителей: избавьтесь от хаоса поиска</h2>
                 <ul class="parents-list">
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Находите проверенные кружки и секции рядом с домом с реальными отзывами</span>
+                        <span><strong>Избавьтесь от хаоса</strong> — все кружки в одном месте с актуальными расписаниями и ценами</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Проходите AI-тест для определения способностей ребенка и получайте персонализированные рекомендации</span>
+                        <span><strong>Только проверенные варианты</strong> — читайте реальные отзывы и рейтинги от других родителей</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Бронируйте и оплачивайте занятия онлайн без скрытых комиссий</span>
+                        <span><strong>Экономьте до 5 часов в неделю</strong> — больше не нужно обзванивать десятки мест и помнить все расписания</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Получайте напоминания о занятиях и отслеживайте прогресс ребенка</span>
+                        <span><strong>Персональные рекомендации</strong> — AI подбирает кружки именно под интересы и способности вашего ребенка</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Читайте отзывы других родителей и делитесь своим опытом в сообществе</span>
+                        <span><strong>Удобное управление</strong> — все занятия ребенка в одном календаре с напоминаниями</span>
                     </li>
                 </ul>
                 <div class="parents-buttons">
                     <button class="btn btn-primary">
-                        <i class="fas fa-search"></i> Найти кружки
+                        <i class="fas fa-search"></i> Найти кружки для моего ребенка
                     </button>
                 </div>
             </div>
@@ -1632,32 +1745,32 @@
     <section class="for-organizations" id="for-organizations">
         <div class="container orgs-content">
             <div class="orgs-text fade-in">
-                <h2 class="orgs-title">Для организаций</h2>
+                <h2 class="orgs-title">Для организаций: привлекайте клиентов без лишних затрат</h2>
                 <ul class="orgs-list">
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Привлекайте целевую аудиторию — родителей вашего региона, заинтересованных в развитии детей</span>
+                        <span><strong>Увеличьте заполняемость групп на 40%</strong> — привлекайте целевых клиентов без лишних затрат на рекламу</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Управляйте расписанием и записью на занятия через удобный личный кабинет</span>
+                        <span><strong>Автоматизируйте запись</strong> — сократите время на администрирование с 3 часов до 15 минут в день</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Автоматизируйте финансовый учет и отчетность — все платежи в одном месте</span>
+                        <span><strong>Улучшите сервис</strong> — получайте обратную связь от родителей и повышайте качество услуг</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Собирайте отзывы и улучшайте свой сервис на основе обратной связи</span>
+                        <span><strong>Увеличьте прибыль</strong> — используйте аналитику для оптимизации расписания и загрузки преподавателей</span>
                     </li>
                     <li>
                         <i class="fas fa-check"></i>
-                        <span>Используйте аналитику для повышения эффективности и увеличения прибыли</span>
+                        <span><strong>Стройте репутацию</strong> — собирайте отзывы и повышайте доверие к вашей организации</span>
                     </li>
                 </ul>
                 <div class="orgs-buttons">
                     <button class="btn btn-primary">
-                        <i class="fas fa-building"></i> Зарегистрировать организацию
+                        <i class="fas fa-building"></i> Привлечь первых учеников за 24 часа
                     </button>
                 </div>
             </div>
@@ -1737,19 +1850,27 @@
         <div class="container">
             <h2 class="cta-title fade-in">Присоединяйтесь к KIDCIRCLE сегодня!</h2>
             <p class="cta-subtitle fade-in delay-1">Более 50,000 родителей и 2,000 организаций уже используют нашу платформу. <br><b>Начните бесплатно прямо сейчас!</b></p>
+            
+            <div class="limited-offer fade-in delay-1">
+                <div class="offer-badge">
+                    <i class="fas fa-gift"></i>
+                    <span>СЕЙЧАС: Бесплатное подключение для первых 100 организаций</span>
+                </div>
+            </div>
+            
             <div class="cta-buttons fade-in delay-2">
                 <button class="btn-cta" id="cta-register-btn">
-                    <i class="fas fa-user-plus"></i> Зарегистрироваться
+                    <i class="fas fa-user-plus"></i> Найти кружки бесплатно
                 </button>
                 <button class="btn-cta btn-cta-dark">
-                    <i class="fas fa-info-circle"></i> Узнать больше
+                    <i class="fas fa-building"></i> Подключить организацию
                 </button>
             </div>
         </div>
         <svg class="cta-wave bottom" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z" fill="white" fill-opacity="0.15"/></svg>
     </section>
 
-    <!-- Новый футер -->
+    <!-- Footer -->
     <footer>
         <div class="footer-animated-line"></div>
         <div class="container">
@@ -1773,8 +1894,9 @@
                 <div>
                     <h3 class="footer-title">Родителям</h3>
                     <ul class="footer-links">
+                        <li><a href="#how-it-works">Как это работает</a></li>
                         <li><a href="#features">Возможности</a></li>
-                        <li><a href="#for-parents">Как это работает</a></li>
+                        <li><a href="#for-parents">Для родителей</a></li>
                         <li><a href="#testimonials">Отзывы</a></li>
                         <li><a href="#">FAQ</a></li>
                     </ul>
@@ -1972,6 +2094,7 @@
 
         // Auth Modals
         const loginBtn = document.getElementById('login-btn');
+        const headerRegisterBtn = document.getElementById('header-register-btn');
         const heroRegisterBtn = document.getElementById('hero-register-btn');
         const ctaRegisterBtn = document.getElementById('cta-register-btn');
         const loginModal = document.getElementById('login-modal');
@@ -2051,6 +2174,10 @@
         
         // Event listeners
         loginBtn.addEventListener('click', () => openModal(loginModal));
+        headerRegisterBtn.addEventListener('click', () => {
+            openModal(loginModal);
+            switchAuthTab('register');
+        });
         heroRegisterBtn.addEventListener('click', () => {
             openModal(loginModal);
             switchAuthTab('register');
