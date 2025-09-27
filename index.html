@@ -534,6 +534,40 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             transform-style: preserve-3d;
             perspective: 1000px;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+        
+        .feature-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .feature-card:nth-child(2) {
+            animation-delay: 1s;
+        }
+        
+        .feature-card:nth-child(3) {
+            animation-delay: 2s;
+        }
+        
+        .feature-card:nth-child(4) {
+            animation-delay: 3s;
+        }
+        
+        .feature-card:nth-child(5) {
+            animation-delay: 4s;
+        }
+        
+        .feature-card:nth-child(6) {
+            animation-delay: 5s;
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
         }
         
         .feature-card::before {
@@ -571,6 +605,42 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            animation: iconPulse 4s ease-in-out infinite;
+        }
+        
+        .feature-card:nth-child(1) .feature-icon {
+            animation-delay: 0.5s;
+        }
+        
+        .feature-card:nth-child(2) .feature-icon {
+            animation-delay: 1.5s;
+        }
+        
+        .feature-card:nth-child(3) .feature-icon {
+            animation-delay: 2.5s;
+        }
+        
+        .feature-card:nth-child(4) .feature-icon {
+            animation-delay: 3.5s;
+        }
+        
+        .feature-card:nth-child(5) .feature-icon {
+            animation-delay: 4.5s;
+        }
+        
+        .feature-card:nth-child(6) .feature-icon {
+            animation-delay: 5.5s;
+        }
+        
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 15px 40px rgba(108, 92, 231, 0.5);
+            }
         }
         
         .feature-card:hover .feature-icon {
@@ -1552,7 +1622,7 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text fade-in">
-                <h1 class="hero-title">Найдите идеальный кружок для своего ребенка!</h1>
+                <h1 class="hero-title">Найдите идеальный кружок для ребенка!</h1>
                 <p class="hero-subtitle">KIDCIRCLE — единственная платформа, где 85% родителей находят подходящие занятия с первого раза. Экономьте время на поиске и больше времени на развитие!</p>
                 
                 <div class="social-proof fade-in delay-1">
@@ -1574,9 +1644,7 @@
                     <button class="btn btn-primary" id="hero-register-btn">
                         <i class="fas fa-search"></i> Найти кружки в моем районе
                     </button>
-                    <button class="btn btn-outline">
-                        <i class="fas fa-play-circle"></i> Смотреть видео (2 мин)
-                    </button>
+                
                 </div>
             </div>
             <div class="hero-image fade-in delay-1">
@@ -1645,7 +1713,7 @@
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
-            <h2 class="section-title fade-in">Почему KIDCIRCLE выбирают 9 из 10 родителей</h2>
+            <h2 class="section-title fade-in">Почему выбирают KIDCIRCLE</h2>
             <p class="section-subtitle fade-in delay-1">Мы создали универсальную платформу для поиска и организации детских кружков с заботой о потребностях всех участников</p>
             
             <div class="features-grid">
@@ -1709,7 +1777,7 @@
                 </div>
             </div>
             <div class="parents-text fade-in delay-1">
-                <h2 class="parents-title">Для родителей: избавьтесь от хаоса поиска</h2>
+                <h2 class="parents-title"></h2>
                 <ul class="parents-list">
                     <li>
                         <i class="fas fa-check"></i>
@@ -1745,7 +1813,7 @@
     <section class="for-organizations" id="for-organizations">
         <div class="container orgs-content">
             <div class="orgs-text fade-in">
-                <h2 class="orgs-title">Для организаций: привлекайте клиентов без лишних затрат</h2>
+                <h2 class="orgs-title"></h2>
                 <ul class="orgs-list">
                     <li>
                         <i class="fas fa-check"></i>
